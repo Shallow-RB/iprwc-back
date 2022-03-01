@@ -5,13 +5,11 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.ryanb.iprwcback.dao.UserDAO;
 import nl.ryanb.iprwcback.model.Role;
 import nl.ryanb.iprwcback.model.User;
-import nl.ryanb.iprwcback.repo.UserRepo;
-import nl.ryanb.iprwcback.service.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,42 +30,30 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 @Slf4j
 public class UserController {
 
-    private final UserService userService;
-    private final UserRepo userRepo;
+    private final UserDAO userDAO;
 
-    @GetMapping(value = "/users")
-    public ResponseEntity<List<User>> getUsers() {
-        log.info("getting users");
-        return ResponseEntity.ok().body(userService.getUsers());
+    @GetMapping(value = "/getusers")
+    public ResponseEntity<List<User>> getAllUsers() {
+        log.info("getting all users");
+        return ResponseEntity.ok().body(userDAO.getAllUsers());
     }
 
-    @PostMapping(value = "/user/save")
-    public ResponseEntity<User> saveUser(@RequestBody User user) {
+    @PostMapping(value = "/register")
+    public ResponseEntity<User> registerUser(@ModelAttribute User user) {
+        user = userDAO.registerUser(user);
 
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/user/save").toUriString());
-        return ResponseEntity.created(uri).body(userService.saveUser(user));
+        userDAO.addRoleToUser(user.getUsername(), "ROLE_USER");
+
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/user/register").toUriString());
+        return ResponseEntity.created(uri).body(user);
     }
 
-    @PostMapping(value = "/role/save")
-    public ResponseEntity<Role> saveRole(@RequestBody Role role) {
-
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/role/save").toUriString());
-        return ResponseEntity.created(uri).body(userService.saveRole(role));
-    }
-
-    @PostMapping(value = "/role/addtouser")
-    public ResponseEntity<?> saveRole(@RequestBody RoleToUserForm form) {
-
-        userService.addRoleToUser(form.getUsername(), form.getRoleName());
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/user/refresh")
+    @GetMapping("/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
 
@@ -79,7 +65,7 @@ public class UserController {
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
 
                 String username = decodedJWT.getSubject();
-                User user = userService.getUser(username);
+                User user = userDAO.getUser(username);
 
                 if (user.getUsername().isEmpty()) {
                     throw new RuntimeException("Subject not found");
@@ -117,8 +103,3 @@ public class UserController {
 }
 
 
-@Data
-class RoleToUserForm {
-    private String username;
-    private String roleName;
-}

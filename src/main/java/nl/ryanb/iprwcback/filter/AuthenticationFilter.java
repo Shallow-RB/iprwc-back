@@ -46,7 +46,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
         User user = (User) authResult.getPrincipal();
 
         log.info(user.toString());
@@ -74,11 +74,13 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
     }
 
-//    @Override
-//    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
 //        log.error(failed.getMessage());
 //        failed.printStackTrace();
-//
-//        super.unsuccessfulAuthentication(request, response, failed);
-//    }
+
+        super.unsuccessfulAuthentication(request, response, failed);
+    }
+
+
 }

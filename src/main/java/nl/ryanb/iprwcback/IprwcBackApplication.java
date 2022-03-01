@@ -1,8 +1,10 @@
 package nl.ryanb.iprwcback;
 
+import nl.ryanb.iprwcback.dao.ProductDAO;
+import nl.ryanb.iprwcback.model.Product;
 import nl.ryanb.iprwcback.model.Role;
 import nl.ryanb.iprwcback.model.User;
-import nl.ryanb.iprwcback.service.UserService;
+import nl.ryanb.iprwcback.dao.UserDAO;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,19 +27,24 @@ public class IprwcBackApplication {
     }
 
     @Bean
-    CommandLineRunner run(UserService userService) {
+    CommandLineRunner run(UserDAO userDAO, ProductDAO productDAO) {
         return args -> {
-            userService.saveRole(new Role(null, "ROLE_USER"));
-            userService.saveRole(new Role(null, "ROLE_ADMIN"));
+            userDAO.saveRole(new Role(null, "ROLE_USER"));
+            userDAO.saveRole(new Role(null, "ROLE_ADMIN"));
 
-            userService.saveUser(new User(null, "Ryan Bhola", "Ryan", "1234", new ArrayList<>()));
-            userService.saveUser(new User(null, "Jan Jan", "Jan1", "1234", new ArrayList<>()));
-            userService.saveUser(new User(null, "Bob Bob", "Bob1", "1234", new ArrayList<>()));
+            userDAO.registerUser(new User(null, "Ryan Bhola", "Ryan", "1234", new ArrayList<>()));
+            userDAO.registerUser(new User(null, "Jan Jan", "Jan1", "1234", new ArrayList<>()));
+            userDAO.registerUser(new User(null, "Bob Bob", "Bob1", "1234", new ArrayList<>()));
 
-            userService.addRoleToUser("Ryan", "ROLE_ADMIN");
-            userService.addRoleToUser("Ryan", "ROLE_USER");
-            userService.addRoleToUser("Jan1", "ROLE_USER");
-            userService.addRoleToUser("Bob1", "ROLE_USER");
+            userDAO.addRoleToUser("Ryan", "ROLE_ADMIN");
+            userDAO.addRoleToUser("Ryan", "ROLE_USER");
+            userDAO.addRoleToUser("Jan1", "ROLE_USER");
+            userDAO.addRoleToUser("Bob1", "ROLE_USER");
+
+            productDAO.addProduct(new Product(null, "shoes", 100.0, "size 41 shoes"));
+            productDAO.addProduct(new Product(null, "hoodie", 50.0, "very comfy hoodie yes oui"));
+            productDAO.addProduct(new Product(null, "pants", 40.0, "jogger pants yes blabla"));
+
         };
     }
 }

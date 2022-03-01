@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @EnableWebSecurity
@@ -48,10 +48,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/login").permitAll();
         http.authorizeRequests().antMatchers("/user/register").permitAll();
         http.authorizeRequests().antMatchers("/user/refresh/**").permitAll();
+        http.authorizeRequests().antMatchers(GET, "/product/**").permitAll();
 
-        http.authorizeRequests().antMatchers(GET,"/users").hasAnyAuthority("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers("/role/**").hasAuthority("ROLE_ADMIN");
 
-
+        http.authorizeRequests().antMatchers(POST, "/**/create").hasAuthority("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(DELETE, "/**/delete").hasAuthority("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(PUT, "/**/update").hasAuthority("ROLE_ADMIN");
 //        http.authorizeRequests().anyRequest().authenticated();
 
         http.addFilter(new AuthenticationFilter(authenticationManager()));

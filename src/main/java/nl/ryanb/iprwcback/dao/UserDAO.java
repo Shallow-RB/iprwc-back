@@ -1,4 +1,4 @@
-package nl.ryanb.iprwcback.service;
+package nl.ryanb.iprwcback.dao;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class UserService implements UserDetailsService {
+public class UserDAO implements UserDetailsService {
 
     private final UserRepo userRepo;
     private final RoleRepo roleRepo;
@@ -56,16 +56,23 @@ public class UserService implements UserDetailsService {
         return this.userRepo.findByUsername(username);
     }
 
-    public List<User> getUsers() {
+    public List<User> getAllUsers() {
         log.info("Getting all users");
 
         return this.userRepo.findAll();
     }
 
-    public User saveUser(User user){
-        log.info("Saving new user {} to db", user.getName());
+    public User registerUser(User user){
+        log.info("Registering new user {} to db", user.getName());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         return this.userRepo.save(user);
+    }
+
+    public List<Role> getAllRoles() {
+        log.info("Getting all roles");
+
+        return this.roleRepo.findAll();
     }
 
     public Role saveRole(Role role) {
@@ -75,10 +82,18 @@ public class UserService implements UserDetailsService {
     }
 
     public void addRoleToUser(String username, String roleName) {
-        log.info("Adding role {} to user {}", roleName, username);
+        log.info("Adding role {} to user {}...", roleName, username);
+
         User user = userRepo.findByUsername(username);
         Role role = roleRepo.findByName(roleName);
+
+        if (user.getUsername().isEmpty() || role.getName().isEmpty()) {
+            log.warn("Either user {} or role {} is not in the database", username, roleName);
+            return;
+        }
+
         user.getRoles().add(role);
+        log.info("Sucessfully added role {} to user {} !", roleName, username);
     }
 
 
