@@ -45,9 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.authorizeRequests().antMatchers("/login").permitAll();
-        http.authorizeRequests().antMatchers("/user/register").permitAll();
-        http.authorizeRequests().antMatchers("/user/refresh/**").permitAll();
+        http.authorizeRequests().antMatchers("/login","/user/register", "/user/refresh/**").permitAll();
         http.authorizeRequests().antMatchers(GET, "/product/**").permitAll();
 
         http.authorizeRequests().antMatchers("/role/**").hasAuthority("ROLE_ADMIN");
@@ -55,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(POST, "/**/create").hasAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers(DELETE, "/**/delete").hasAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers(PUT, "/**/update").hasAuthority("ROLE_ADMIN");
-//        http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests().anyRequest().authenticated();
 
         http.addFilter(new AuthenticationFilter(authenticationManager()));
         http.addFilterBefore(new AuthorizationFilter(userRepo), UsernamePasswordAuthenticationFilter.class);

@@ -38,12 +38,12 @@ public class IprwcBackApplication {
 
             userDAO.addRoleToUser("Ryan", "ROLE_ADMIN");
             userDAO.addRoleToUser("Ryan", "ROLE_USER");
-            userDAO.addRoleToUser("Jan1", "ROLE_USER");
             userDAO.addRoleToUser("Bob1", "ROLE_USER");
+            userDAO.addRoleToUser("Jan1", "ROLE_USER");
 
-            productDAO.addProduct(new Product(null, "shoes", 100.0, "size 41 shoes"));
-            productDAO.addProduct(new Product(null, "hoodie", 50.0, "very comfy hoodie yes oui"));
-            productDAO.addProduct(new Product(null, "pants", 40.0, "jogger pants yes blabla"));
+            productDAO.addProduct(new Product(null, "shoes", 100.0, "size 41 shoes", "linkje"));
+            productDAO.addProduct(new Product(null, "hoodie", 50.0, "very comfy hoodie yes oui", "linkje"));
+            productDAO.addProduct(new Product(null, "pants", 40.0, "jogger pants yes blabla", "linkje"));
 
         };
     }

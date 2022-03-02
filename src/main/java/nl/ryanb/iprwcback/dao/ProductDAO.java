@@ -35,6 +35,11 @@ public class ProductDAO {
         return this.productRepo.save(product);
     }
 
+    public Product updateProduct(Long id,Product product) {
+        product.setId(id);
+        return this.productRepo.save(product);
+    }
+
     public void deleteProduct(Long id) {
         log.info("Deleting product with id: ({}) from db", id);
 

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import static javax.persistence.FetchType.EAGER;
-import static javax.persistence.GenerationType.AUTO;
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Data
@@ -20,7 +20,7 @@ import static javax.persistence.GenerationType.AUTO;
 @AllArgsConstructor
 
 public class User {
-    @Id @GeneratedValue(strategy = AUTO)
+    @Id @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String name;
     private String username;
