@@ -1,4 +1,4 @@
-package nl.ryanb.iprwcback.model.request;
+package nl.ryanb.iprwcback.model.req;
 
 import lombok.Data;
 

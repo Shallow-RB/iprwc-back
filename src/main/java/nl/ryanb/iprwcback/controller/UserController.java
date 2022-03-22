@@ -44,8 +44,8 @@ public class UserController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<User> registerUser(@ModelAttribute User user) {
-        user = userDAO.registerUser(user);
+    public ResponseEntity<User> saveUser(@ModelAttribute User user) {
+        user = userDAO.saveUser(user);
 
         userDAO.addRoleToUser(user.getUsername(), "ROLE_USER");
 

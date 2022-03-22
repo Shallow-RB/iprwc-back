@@ -62,9 +62,12 @@ public class UserDAO implements UserDetailsService {
         return this.userRepo.findAll();
     }
 
-    public User registerUser(User user){
-        log.info("Registering new user {} to db", user.getName());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public User saveUser(User user){
+        log.info("Saving user {} to db", user.getName());
+
+        if (user.getId() == null) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
 
         return this.userRepo.save(user);
     }

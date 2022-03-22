@@ -5,13 +5,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.ryanb.iprwcback.dao.ProductDAO;
 import nl.ryanb.iprwcback.model.Product;
-import nl.ryanb.iprwcback.model.request.UpdateProduct;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/product")
@@ -43,26 +43,16 @@ public class ProductController {
     }
 
 
-//    @PutMapping(value = "/{id}/update")
-//    public ResponseEntity<Product> updateProduct (@PathVariable("id") Long id, @RequestBody Product product) {
-//        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/product/update").toUriString());
-//
-//        return ResponseEntity.created(uri).body(this.productDAO.updateProduct(id, product));
-//    }
-
     @PutMapping(value = "/{id}/update")
-    public ResponseEntity<UpdateProduct> updateProduct(@PathVariable("id") Long id, @RequestBody UpdateProduct product) {
+    public ResponseEntity<Product> updateProduct (@PathVariable("id") Long id, @RequestBody Product product) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/product/update").toUriString());
 
-        Product storedProduct = productDAO.getProductById(id);
-        storedProduct.setName(product.getName());
-        storedProduct.setPrice(product.getPrice());
-        storedProduct.setDescription(product.getDescription());
-        storedProduct.setImageURL(product.getImageURL());
+        Optional<Product> optionalProduct = this.productDAO.findProductById(id);
+        if (optionalProduct.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
 
-        productDAO.updateProduct(id, storedProduct);
-
-        return ResponseEntity.created(uri).body(product);
+        return ResponseEntity.created(uri).body(this.productDAO.updateProduct(id, product));
     }
 
 }

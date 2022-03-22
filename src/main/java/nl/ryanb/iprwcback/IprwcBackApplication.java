@@ -32,9 +32,9 @@ public class IprwcBackApplication {
             userDAO.saveRole(new Role(null, "ROLE_USER"));
             userDAO.saveRole(new Role(null, "ROLE_ADMIN"));
 
-            userDAO.registerUser(new User(null, "Ryan Bhola", "Ryan", "1234", new ArrayList<>()));
-            userDAO.registerUser(new User(null, "Jan Jan", "Jan1", "1234", new ArrayList<>()));
-            userDAO.registerUser(new User(null, "Bob Bob", "Bob1", "1234", new ArrayList<>()));
+            userDAO.saveUser(new User(null, "Ryan Bhola", "Ryan", "1234", new ArrayList<>()));
+            userDAO.saveUser(new User(null, "Jan Jan", "Jan1", "1234", new ArrayList<>()));
+            userDAO.saveUser(new User(null, "Bob Bob", "Bob1", "1234", new ArrayList<>()));
 
             userDAO.addRoleToUser("Ryan", "ROLE_ADMIN");
             userDAO.addRoleToUser("Ryan", "ROLE_USER");

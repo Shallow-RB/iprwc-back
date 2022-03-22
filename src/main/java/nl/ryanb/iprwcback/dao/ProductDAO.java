@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +29,13 @@ public class ProductDAO {
 
         return this.productRepo.getById(id);
     }
+
+    public Optional<Product> findProductById(Long id) {
+        log.info("Getting product with id: {}", id);
+
+        return this.productRepo.findById(id);
+    }
+
 
     public Product addProduct(Product product) {
         log.info("Adding new product {} to db", product.getName());
