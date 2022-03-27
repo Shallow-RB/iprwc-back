@@ -12,6 +12,8 @@ import nl.ryanb.iprwcback.model.Role;
 import nl.ryanb.iprwcback.model.User;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -33,18 +35,26 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 @Slf4j
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
     private final UserDAO userDAO;
 
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @GetMapping(value = "/getusers")
     public ResponseEntity<List<User>> getAllUsers() {
         log.info("getting all users");
         return ResponseEntity.ok().body(userDAO.getAllUsers());
     }
 
+
     @PostMapping(value = "/register")
     public ResponseEntity<User> saveUser(@ModelAttribute User user) {
+        User name = userDAO.getUser(user.getUsername());
+
+        if (name != null){
+            return ResponseEntity.notFound().build();
+        }
         user = userDAO.saveUser(user);
 
         userDAO.addRoleToUser(user.getUsername(), "ROLE_USER");
@@ -53,6 +63,13 @@ public class UserController {
         return ResponseEntity.created(uri).body(user);
     }
 
+
+    @GetMapping("/profile")
+    public ResponseEntity<User> profile() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return ResponseEntity.ok(user);
+    }
 
 
     @GetMapping("/refresh")

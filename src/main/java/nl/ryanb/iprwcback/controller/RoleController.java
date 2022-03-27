@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import nl.ryanb.iprwcback.dao.UserDAO;
 import nl.ryanb.iprwcback.model.Role;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -14,10 +15,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/role")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class RoleController {
 
     private final UserDAO userDAO;
 
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @GetMapping("/getroles")
     public ResponseEntity<List<Role>> getRoles () {
         return ResponseEntity.ok().body(userDAO.getAllRoles());
@@ -30,8 +33,7 @@ public class RoleController {
         return ResponseEntity.created(uri).body(userDAO.saveRole(role));
     }
 
-
-
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @PostMapping(value = "/addtouser")
     public ResponseEntity<?> saveRole(@RequestBody RoleToUserForm form) {
 
