@@ -58,9 +58,16 @@ public class IprwcBackApplication {
             userDAO.addRoleToUser("Bob1", "ROLE_USER");
             userDAO.addRoleToUser("Jan1", "ROLE_USER");
 
-            productDAO.addProduct(new Product(null, "shoes", 100.0, "size 41 shoes", "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/d5f168f9-f953-4419-ac7a-f0def128176e/renew-run-2-mens-road-running-shoe-8WSLZf.png"));
-            productDAO.addProduct(new Product(null, "hoodie", 50.0, "very comfy hoodie yes oui", "https://img01.ztat.net/article/spp-media-p1/200ef2de50de3345a22d435e87119f17/fe0e96c6eabb4c51841f82342129aa1d.jpg?imwidth=1800&filter=packshot"));
-            productDAO.addProduct(new Product(null, "pants", 40.0, "jogger pants yes blabla", "https://www.helikon-tex.com/media/catalog/product/cache/6/image/9df78eab33525d08d6e5fb8d27136e95/s/p/sp-pgm-dc-11.jpg"));
+            productDAO.addProduct(new Product(null, "SPACE", 500.0, "SPACE", "https://images-ext-1.discordapp.net/external/4HzkzeyTSi7WeBO3CXvnNC4nhj4Fj8C7n-jc8cT-0VY/https/images.all-free-download.com/images/graphicwebp/x_foil_attack_craft_514618.webp"));
+            productDAO.addProduct(new Product(null, "SPACE", 500.0, "SPACE", "https://images-ext-2.discordapp.net/external/uT32oGnE4EuXHrmK1LFjif3tYaQB3nKhgWDhkXJg-9Y/https/images.all-free-download.com/images/graphicwebp/1_x_coffee_515935.webp"));
+            productDAO.addProduct(new Product(null, "SPACE", 500.0, "SPACE", "https://images-ext-2.discordapp.net/external/NSiWIz3oUOx5i2dqe7vmMHS5bisu10D6mbaIyyXgWCE/https/images.all-free-download.com/images/graphicwebp/x_shepherd_565662.webp"));
+            productDAO.addProduct(new Product(null, "SPACE", 500.0, "SPACE", "https://www.nlspacecampus.eu/cache/3/1920x1080/mob-shutterstock-481251031-20210610135721_1920x1080.jpg"));
+            productDAO.addProduct(new Product(null, "SPACE", 500.0, "SPACE", "https://www.nlspacecampus.eu/cache/3/1920x1080/mob-shutterstock-481251031-20210610135721_1920x1080.jpg"));
+            productDAO.addProduct(new Product(null, "SPACE", 500.0, "SPACE", "https://www.nlspacecampus.eu/cache/3/1920x1080/mob-shutterstock-481251031-20210610135721_1920x1080.jpg"));
+            productDAO.addProduct(new Product(null, "SPACE", 500.0, "SPACE", "https://www.nlspacecampus.eu/cache/3/1920x1080/mob-shutterstock-481251031-20210610135721_1920x1080.jpg"));
+            productDAO.addProduct(new Product(null, "SPACE", 500.0, "SPACE", "https://www.nlspacecampus.eu/cache/3/1920x1080/mob-shutterstock-481251031-20210610135721_1920x1080.jpg"));
+            productDAO.addProduct(new Product(null, "SPACE", 500.0, "SPACE", "https://www.nlspacecampus.eu/cache/3/1920x1080/mob-shutterstock-481251031-20210610135721_1920x1080.jpg"));
+            productDAO.addProduct(new Product(null, "SPACE", 500.0, "SPACE", "https://www.nlspacecampus.eu/cache/3/1920x1080/mob-shutterstock-481251031-20210610135721_1920x1080.jpg"));
 
         };
     }

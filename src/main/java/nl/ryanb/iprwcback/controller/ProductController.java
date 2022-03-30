@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import nl.ryanb.iprwcback.dao.ProductDAO;
 import nl.ryanb.iprwcback.model.Product;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -29,24 +28,20 @@ public class ProductController {
         return ResponseEntity.ok().body(productDAO.getAllProducts());
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @PostMapping(value = "/create")
-    public ResponseEntity<Product> addProduct(@ModelAttribute Product product) {
+    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/product/create").toUriString());
 
         return ResponseEntity.created(uri).body(productDAO.addProduct(product));
     }
 
-
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    @DeleteMapping(value = "/{id}/delete")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable("id") Long id) {
 
         productDAO.deleteProduct(id);
         return ResponseEntity.ok().build();
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @PutMapping(value = "/{id}/update")
     public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/product/update").toUriString());

@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -50,11 +51,13 @@ public class UserController {
 
     @PostMapping(value = "/register")
     public ResponseEntity<User> saveUser(@ModelAttribute User user) {
-        User name = userDAO.getUser(user.getUsername());
 
-        if (name != null){
-            return ResponseEntity.notFound().build();
+        if (userDAO.getUser(user.getUsername()) != null){
+            log.info("user gevonden");
+            return ResponseEntity.status(CONFLICT).build();
         }
+
+        log.info("user niet gevonden");
         user = userDAO.saveUser(user);
 
         userDAO.addRoleToUser(user.getUsername(), "ROLE_USER");

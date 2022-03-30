@@ -49,10 +49,8 @@ public class UserDAO implements UserDetailsService {
     }
 
 
-
     public User getUser(String username) {
         log.info("Getting user {}", username);
-
         return this.userRepo.findByUsername(username);
     }
 
