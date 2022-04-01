@@ -9,8 +9,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.lang.NonNull;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,22 +30,31 @@ public class IprwcBackApplication {
       return new BCryptPasswordEncoder();
     }
 
-
-
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
-            public void addCorsMappings(@NonNull CorsRegistry registry) {
-                registry.addMapping("https://iprwc-s1126167.herokuapp.com/")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .allowedHeaders("*")
-                        .allowedOriginPatterns("*")
-                        .allowCredentials(false)
-                        .allowedOrigins("*");
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("https://iprwc-s1126167.herokuapp.com");
             }
         };
     }
+
+    //    @Bean
+//    public WebMvcConfigurer corsConfigurer() {
+//        return new WebMvcConfigurer() {
+//            @Override
+//            public void addCorsMappings(@NonNull CorsRegistry registry) {
+//                registry.addMapping("https://iprwc-s1126167.herokuapp.com/")
+//                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+//                        .allowedHeaders("*")
+//                        .allowedOriginPatterns("*")
+//                        .allowCredentials(false)
+//                        .allowedOrigins("*");
+//            }
+//        };
+//    }
+
     @Bean
     CommandLineRunner run(UserDAO userDAO, ProductDAO productDAO) {
         return args -> {
