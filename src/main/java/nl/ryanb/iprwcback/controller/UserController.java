@@ -33,10 +33,10 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
+@CrossOrigin(origins = "https://iprwc-s1126167.herokuapp.com")
 @RequestMapping("/user")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "https://iprwc-s1126167.herokuapp.com")
 public class UserController {
 
     private final UserDAO userDAO;
@@ -51,8 +51,7 @@ public class UserController {
 
     @PostMapping(value = "/register")
     public ResponseEntity<User> saveUser(@ModelAttribute User user) {
-
-        System.out.println(user);
+        System.out.println("HALLLOOO");
         if (userDAO.getUser(user.getUsername()) != null){
             log.info("user gevonden");
             return ResponseEntity.status(CONFLICT).build();
