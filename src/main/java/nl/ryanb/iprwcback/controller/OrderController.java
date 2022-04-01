@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/order")
 @Slf4j
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 public class OrderController {
 
 

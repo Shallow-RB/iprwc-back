@@ -22,7 +22,7 @@ import static org.springframework.http.HttpMethod.*;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserRepo userRepo;

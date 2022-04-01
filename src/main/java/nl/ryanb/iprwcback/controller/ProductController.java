@@ -17,7 +17,7 @@ import java.util.Optional;
 @RequestMapping("/product")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 public class ProductController {
 
     private final ProductDAO productDAO;

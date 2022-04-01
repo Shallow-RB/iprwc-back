@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.ArrayList;
 
 @SpringBootApplication
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 public class IprwcBackApplication {
 
     public static void main(String[] args) {
@@ -36,7 +36,7 @@ public class IprwcBackApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4200")
+                        .allowedOrigins("*")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*");
             }
