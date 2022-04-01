@@ -30,18 +30,18 @@ public class IprwcBackApplication {
       return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public WebMvcConfigurer getCorsConfiguration(){
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("*")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .allowedHeaders("*");
-            }
-        };
-    }
+//    @Bean
+//    public WebMvcConfigurer getCorsConfiguration(){
+//        return new WebMvcConfigurer() {
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry.addMapping("/**")
+//                        .allowedOrigins("*")
+//                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+//                        .allowedHeaders("*");
+//            }
+//        };
+//    }
 
     @Bean
     CommandLineRunner run(UserDAO userDAO, ProductDAO productDAO) {
