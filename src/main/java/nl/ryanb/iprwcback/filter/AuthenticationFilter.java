@@ -36,6 +36,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+        System.out.println("HOI IM HERE");
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
