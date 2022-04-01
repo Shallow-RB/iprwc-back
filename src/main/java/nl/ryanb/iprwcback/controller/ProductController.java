@@ -17,7 +17,7 @@ import java.util.Optional;
 @RequestMapping("/product")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin
+@CrossOrigin(origins = "https://iprwc-s1126167.herokuapp.com")
 public class ProductController {
 
     private final ProductDAO productDAO;

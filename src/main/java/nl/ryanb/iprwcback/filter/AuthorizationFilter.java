@@ -32,7 +32,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin
+@CrossOrigin(origins = "https://iprwc-s1126167.herokuapp.com")
 public class AuthorizationFilter extends OncePerRequestFilter {
 
     private final UserRepo userRepo;

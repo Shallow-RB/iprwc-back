@@ -22,7 +22,7 @@ import static org.springframework.http.HttpMethod.*;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@CrossOrigin
+@CrossOrigin(origins = "https://iprwc-s1126167.herokuapp.com")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserRepo userRepo;
