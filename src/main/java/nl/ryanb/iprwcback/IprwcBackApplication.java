@@ -40,21 +40,6 @@ public class IprwcBackApplication {
         };
     }
 
-    //    @Bean
-//    public WebMvcConfigurer corsConfigurer() {
-//        return new WebMvcConfigurer() {
-//            @Override
-//            public void addCorsMappings(@NonNull CorsRegistry registry) {
-//                registry.addMapping("https://iprwc-s1126167.herokuapp.com/")
-//                        .allowedMethods("GET", "POST", "PUT", "DELETE")
-//                        .allowedHeaders("*")
-//                        .allowedOriginPatterns("*")
-//                        .allowCredentials(false)
-//                        .allowedOrigins("*");
-//            }
-//        };
-//    }
-
     @Bean
     CommandLineRunner run(UserDAO userDAO, ProductDAO productDAO) {
         return args -> {
