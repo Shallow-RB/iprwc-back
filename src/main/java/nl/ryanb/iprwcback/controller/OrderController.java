@@ -10,7 +10,6 @@ import nl.ryanb.iprwcback.repo.ProductRepo;
 import nl.ryanb.iprwcback.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -26,6 +25,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 public class OrderController {
 
+
     OrderDAO orderDAO;
     UserRepo userRepo;
     ProductRepo productRepo;
@@ -37,16 +37,27 @@ public class OrderController {
         this.productRepo = productRepo;
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @GetMapping(value = "/getorders")
     public ResponseEntity<List<Orders>> getAllOrders() {
 
         return ResponseEntity.ok().body(orderDAO.getAllOrders());
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @GetMapping()
+    public ResponseEntity<List<Orders>> getAllOrdersById() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println(username);
+        User user = this.userRepo.findByUsername(username);
+
+        List<Orders> testlist = orderDAO.getOrdersByUserId(user.getId());
+        System.out.println(testlist);
+        return ResponseEntity.ok().body(testlist);
+    }
+
+
     @PostMapping()
     public ResponseEntity<?> createOrder(@RequestBody OrderDTO orderDTO) {
+
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/order/create").toUriString());
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -54,7 +65,8 @@ public class OrderController {
         User user = this.userRepo.findByUsername(username);
 
         Orders order = new Orders();
-        order.setUser(user);
+
+        order.setUserId(user.getId());
 
         Collection<Product> productList = new ArrayList<>();
 
@@ -62,9 +74,11 @@ public class OrderController {
             Product i = productRepo.findById(productid).get();
             productList.add(i);
         }
+        System.out.println(productList);
+
         order.setProducts(productList);
 
-        return ResponseEntity.created(uri).body(orderDAO.createOrder(order));
+        return ResponseEntity.created(uri).body(this.orderDAO.createOrder(order));
     }
 
 

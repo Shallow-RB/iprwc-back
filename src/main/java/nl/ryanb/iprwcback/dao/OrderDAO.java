@@ -24,9 +24,15 @@ public class OrderDAO {
     }
 
     public Orders createOrder(Orders order) {
-        log.info("creating order for {} to db.", order.getUser().getUsername());
+        log.info("creating order for {} to db.", order.getUserId());
 
         return this.orderRepo.save(order);
     }
+
+    public List<Orders> getOrdersByUserId(Long id) {
+        log.info("getting orders for {} to db.", id);
+        return this.orderRepo.findByUserId(id);
+    }
+
 
 }

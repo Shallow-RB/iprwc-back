@@ -52,6 +52,7 @@ public class UserController {
     @PostMapping(value = "/register")
     public ResponseEntity<User> saveUser(@ModelAttribute User user) {
 
+        System.out.println(user);
         if (userDAO.getUser(user.getUsername()) != null){
             log.info("user gevonden");
             return ResponseEntity.status(CONFLICT).build();

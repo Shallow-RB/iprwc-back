@@ -13,16 +13,17 @@ import java.util.Collection;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "orders")
-public class Orders {
+
+public class Orders  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long orderId;
 
-    @ManyToOne
-    private User user;
+    private Long userId;
 
-    @OneToMany(cascade=CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<Product> products;
 }
+
+
 

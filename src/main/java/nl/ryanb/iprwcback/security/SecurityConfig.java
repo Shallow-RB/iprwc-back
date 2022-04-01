@@ -48,13 +48,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests().antMatchers("/login").permitAll();
-        http.authorizeRequests().antMatchers("/user/register", "/user/refresh/**").permitAll();
-        http.authorizeRequests().antMatchers(GET, "/product/**").permitAll();
+        http.authorizeRequests().antMatchers("/user/register").permitAll();
+        http.authorizeRequests().antMatchers("/register").permitAll();
+        http.authorizeRequests().antMatchers( "/user/refresh/**").permitAll();
+        http.authorizeRequests().antMatchers(GET, "/product").permitAll();
+        http.authorizeRequests().antMatchers(GET,"/order/**").permitAll();
+        http.authorizeRequests().antMatchers(GET,"/order/getorders").hasAnyAuthority("ROLE_ADMIN");
+
 
         http.authorizeRequests().antMatchers(POST,"/order/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN");
-        http.authorizeRequests().antMatchers(GET,"/order/**").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers("/role/**").hasAuthority("ROLE_ADMIN");
-
         http.authorizeRequests().antMatchers(POST, "/**/create").hasAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers(DELETE, "/**/delete").hasAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers(PUT, "/**/update").hasAuthority("ROLE_ADMIN");

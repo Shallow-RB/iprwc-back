@@ -63,7 +63,7 @@ public class UserDAO implements UserDetailsService {
     public User saveUser(User user){
         log.info("Saving user {} to db", user.getName());
 
-        if (user.getId() == null) {
+        if (user.getId() == null && user.getPassword() != null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
 
