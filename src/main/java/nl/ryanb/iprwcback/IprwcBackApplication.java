@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.ArrayList;
 
 @SpringBootApplication
-@CrossOrigin
+@CrossOrigin(origins = "https://iprwc-s1126167.herokuapp.com")
 public class IprwcBackApplication {
 
     public static void main(String[] args) {
