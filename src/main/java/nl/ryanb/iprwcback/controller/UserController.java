@@ -36,7 +36,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "https://iprwc-s1126167.herokuapp.com")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
     private final UserDAO userDAO;

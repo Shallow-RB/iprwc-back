@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.ArrayList;
 
 @SpringBootApplication
-@CrossOrigin(origins = "https://iprwc-s1126167.herokuapp.com")
+@CrossOrigin(origins = "http://localhost:4200")
 public class IprwcBackApplication {
 
     public static void main(String[] args) {
@@ -31,11 +31,11 @@ public class IprwcBackApplication {
     }
 
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
+    WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("https://iprwc-s1126167.herokuapp.com");
+                registry.addMapping("/");
             }
         };
     }

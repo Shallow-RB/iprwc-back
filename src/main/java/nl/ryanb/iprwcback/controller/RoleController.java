@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/role")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "https://iprwc-s1126167.herokuapp.com")
+@CrossOrigin(origins = "http://localhost:4200")
 public class RoleController {
 
     private final UserDAO userDAO;
